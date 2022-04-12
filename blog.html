@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+      #Blog {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--DO NOT CHANGE THIS ID's-->
+
+    <div id="container">
+      <div id="sidebar">
+        <!--add your sidebar component here-->
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Show the clicked article in detailed format here ONLY-->
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="module">
+
+  import sidebar from "./components/sidebar.js"
+  // console.log(sidebar)
+  const sideNavbar = document.getElementById('sidebar')
+  sideNavbar.innerHTML = sidebar();
+
+  let data  = JSON.parse(localStorage.getItem('article'))
+  console.log('data: ', data);
+  let title = document.createElement('h2')
+  title.innerText = data.title
+  let description = document.createElement('p')
+  description.innerText = data.description
+  let image = document.createElement('img')
+  image.src = data.urlToImage
+
+  let parent = document.createElement('div')
+  parent.setAttribute('id','Blog')
+  parent.append(title,description,image)
+  let main = document.getElementById('main')
+  main.append(parent)
+
+
+  let searchBar = document.getElementById('searchbar');
+    searchBar.addEventListener('keypress',async () => {
+      // console.log(event);
+      if(event.key === 'Enter') {
+        // console.log('Search...')
+        let input = searchBar.value
+        localStorage.setItem('search_term',JSON.stringify(input));
+        window.open('./search.html', '_self');
+        // console.log('input: ', input);
+      }
+    })
+
+</script>
